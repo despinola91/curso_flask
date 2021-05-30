@@ -1,6 +1,7 @@
+import unittest
 from flask import Flask, request, make_response, redirect, render_template, session, url_for, flash
 from flask_bs4 import Bootstrap
-import unittest
+from flask_login import login_required
 
 from app import create_app
 from app.forms import LoginForm
@@ -40,6 +41,7 @@ def index():
 
 
 @app.route('/hello', methods=['GET'])
+@login_required
 def hello():
     user_ip = session.get('user_ip')
     username = session.get('username')
@@ -51,9 +53,9 @@ def hello():
     }
     
     users = get_users()
-    for user in users:
-        print(user.id)
-        print(user.to_dict()['password'])
+    # for user in users:
+    #     print(user.id)
+    #     print(user.to_dict()['password'])
 
     return render_template('hello.html', **context)
 
