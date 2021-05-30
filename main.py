@@ -1,26 +1,14 @@
 from flask import Flask, request, make_response, redirect, render_template, session, url_for, flash
-#from flask.helpers import flash
-#from flask_bootstrap import Bootstrap
 from flask_bs4 import Bootstrap
-#from os import urandom
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, data_required
 import unittest
 
-app = Flask(__name__)
-bootstrap = Bootstrap(app) #Inicializamos bootstrap
+from app import create_app
+from app.forms import LoginForm
 
-app.config['SECRET_KEY'] = 'SUPER SECRETO'
-#app.config['SECRET_KEY'] = urandom(16) --> forma más segura de generar secret key
-
+app = create_app()
 
 todos = ['Comprar café', 'Enviar solicitud de compra', 'Entregar video al productor']
 
-class LoginForm(FlaskForm):
-    username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 
 @app.cli.command()
