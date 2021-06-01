@@ -10,9 +10,6 @@ from app.firestore_service import get_todos, get_users, get_todos, put_todo
 
 app = create_app()
 
-# todos = ['Comprar café', 'Enviar solicitud de compra', 'Entregar video al productor']
-
-
 
 @app.cli.command()
 def test():

@@ -39,8 +39,23 @@ class MainTest(TestCase):
 
 
     def test_hello_post(self):
-        response = self.client.post(url_for('hello'))
-        self.assertTrue(response.status_code, 405)
+        #Login
+        self.client.post(url_for('auth.login'), data=self.fake_log_form)
+        fake_todo_form = {
+            'description': 'fake_todo'
+        }
+
+        try:
+            #Send todo
+            response = self.client.post(url_for('hello'), data=fake_todo_form)
+            self.assertRedirects(response, url_for('hello'))
+        finally:
+	    #Remove from db
+            db._delete_todo(
+                self.fake_log_form['username'], 
+                fake_todo_form['description'], 
+                caller=self    
+            )
 
 
     def test_auth_blueprint_exists(self):
