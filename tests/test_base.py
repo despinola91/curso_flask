@@ -103,3 +103,10 @@ class MainTest(TestCase):
         finally:
             #Remove added db
             db._delete_user(fake_form['username'], caller=self)
+
+    
+    def test_delete_todo_post(self):
+        #Login
+        self.client.post(url_for('auth.login'), data=self.fake_log_form)
+        response = self.client.post(url_for('delete_user_todo', todo_description='fake_todo'))
+        self.assertRedirects(response, url_for('hello'))
